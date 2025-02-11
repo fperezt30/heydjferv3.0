@@ -1,12 +1,13 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default function ResultsPage() {
+function ResultsComponent() {
   const searchParams = useSearchParams();
   const [result, setResult] = useState(null);
 
@@ -19,27 +20,8 @@ export default function ResultsPage() {
         console.error("Error parsing result:", error);
       }
     }
-  }, [searchParams]); // Only runs when searchParams changes
+  }, [searchParams]);
 
-  // Helper function to render nested objects and arrays
-  const renderValue = (value) => {
-    if (Array.isArray(value)) {
-      return value.map((item) => (typeof item === "object" ? renderObject(item) : String(item))).join(", ");
-    } else if (typeof value === "object" && value !== null) {
-      return renderObject(value);
-    } else {
-      return typeof value === "number" ? value.toFixed(2) : String(value);
-    }
-  };
-
-  // Helper function to render an object as a formatted string
-  const renderObject = (obj) => {
-    return Object.entries(obj)
-      .map(([key, val]) => `${key}: ${typeof val === "number" ? val.toFixed(2) : val}`)
-      .join(", ");
-  };
-
-  // Function to process and renumber the result
   const processResult = (result) => {
     if (!result) return [];
     return Object.entries(result).map(([key, value], index) => ({
@@ -77,6 +59,14 @@ export default function ResultsPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={<div className="text-white text-center">Loading...</div>}>
+      <ResultsComponent />
+    </Suspense>
   );
 }
 
