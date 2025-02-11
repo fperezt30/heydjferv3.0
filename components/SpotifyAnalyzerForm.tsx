@@ -20,7 +20,7 @@ export default function SpotifyAnalyzerForm() {
     setError(null)
 
     if (!url.includes("open.spotify.com")) {
-      setError("Please enter a valid Spotify URL")
+      setError("Por favor, usa una URL de Spotify válida")
       setLoading(false)
       return
     }
@@ -51,7 +51,7 @@ export default function SpotifyAnalyzerForm() {
   return (
     <Card className="w-full max-w-md bg-gray-800 border-[#39FF14] border-2">
       <CardHeader className="text-center">
-        <CardTitle className="text-[#39FF14] neon-glow">¿Qué género estoy escuchando?</CardTitle>
+        <CardTitle className="text-[#39FF14]">¿Qué género estoy escuchando?</CardTitle>
         <CardDescription className="text-gray-400">Ingresa una URL de una canción de Spotify:</CardDescription>
       </CardHeader>
       <CardContent>
@@ -68,7 +68,7 @@ export default function SpotifyAnalyzerForm() {
             disabled={loading}
             className="w-full bg-[#39FF14] hover:bg-[#32CD32] text-gray-900 font-semibold"
           >
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Analyze"}
+            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Descúbrelo aquí"}
           </Button>
         </form>
       </CardContent>
