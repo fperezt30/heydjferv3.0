@@ -1,50 +1,54 @@
-"use client"
+"use client";
 
-import { useSearchParams } from "next/navigation"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function ResultsPage() {
-  const searchParams = useSearchParams()
-  const resultJson = searchParams.get("result")
+  const searchParams = useSearchParams();
+  const [result, setResult] = useState(null);
 
-  let result
-  try {
-    result = resultJson ? JSON.parse(decodeURIComponent(resultJson)) : null
-  } catch (error) {
-    console.error("Error parsing result:", error)
-    result = null
-  }
+  useEffect(() => {
+    const resultJson = searchParams.get("result");
+    if (resultJson) {
+      try {
+        setResult(JSON.parse(decodeURIComponent(resultJson)));
+      } catch (error) {
+        console.error("Error parsing result:", error);
+      }
+    }
+  }, [searchParams]); // Only runs when searchParams changes
 
   // Helper function to render nested objects and arrays
-  const renderValue = (value: any): string => {
+  const renderValue = (value) => {
     if (Array.isArray(value)) {
-      return value.map((item) => (typeof item === "object" ? renderObject(item) : String(item))).join(", ")
+      return value.map((item) => (typeof item === "object" ? renderObject(item) : String(item))).join(", ");
     } else if (typeof value === "object" && value !== null) {
-      return renderObject(value)
+      return renderObject(value);
     } else {
-      return typeof value === "number" ? value.toFixed(2) : String(value)
+      return typeof value === "number" ? value.toFixed(2) : String(value);
     }
-  }
+  };
 
   // Helper function to render an object as a formatted string
-  const renderObject = (obj: any): string => {
+  const renderObject = (obj) => {
     return Object.entries(obj)
-      .map(([key, val]) => `${key}: ${typeof val === "number" ? (val as number).toFixed(2) : val}`)
-      .join(", ")
-  }
+      .map(([key, val]) => `${key}: ${typeof val === "number" ? val.toFixed(2) : val}`)
+      .join(", ");
+  };
 
   // Function to process and renumber the result
-  const processResult = (result: any) => {
-    if (!result) return []
+  const processResult = (result) => {
+    if (!result) return [];
     return Object.entries(result).map(([key, value], index) => ({
       number: index + 1,
       content: `Género: ${value.Género}, Score: ${value.Score.toFixed(2)}`,
-    }))
-  }
+    }));
+  };
 
-  const processedResult = processResult(result)
+  const processedResult = processResult(result);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-900">
@@ -73,6 +77,6 @@ export default function ResultsPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 
