@@ -36,7 +36,7 @@ function ResultsComponent() {
     <div className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-900">
       <Card className="w-full max-w-2xl bg-gray-800 border-[#39FF14] border-2">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-[#39FF14] neon-glow">El género de tu canción es:</CardTitle>
+          <CardTitle className="text-2xl font-bold text-[#39FF14]">El género de tu canción es:</CardTitle>
         </CardHeader>
         <CardContent>
           {processedResult.length > 0 ? (
