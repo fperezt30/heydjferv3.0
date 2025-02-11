@@ -26,7 +26,7 @@ function ResultsComponent() {
     if (!result) return [];
     return Object.entries(result).map(([key, value], index) => ({
       number: index + 1,
-      content: `Género: ${value.Género}, Score: ${value.Score.toFixed(2)}`,
+      content: `Género: ${value.Class}, Score: ${value.Score.toFixed(2)}`,
     }));
   };
 
