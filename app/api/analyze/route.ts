@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   const { url } = await req.json()
 
   // Base URL of your GCP Cloud Function
-  const gcpFunctionBaseUrl = "https://orquestaspoti6-365559536015.us-central1.run.app/"
+  const gcpFunctionBaseUrl = "XXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
   // Encode the Spotify URL to ensure it's properly formatted in the query string
   const encodedSpotifyUrl = encodeURIComponent(url)
